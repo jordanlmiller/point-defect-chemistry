@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 
 
 def doscar_plot(base, address_list, savename, label_list, fermi_level_list):
+    """Generate density of states plots for each of the charge states given by the address_list and label_list"""
 
     n = len(address_list)
     fig, axes = plt.subplots(1, n, figsize=(int(2*n),4), dpi=500, tight_layout=True, sharey=True, squeeze=False)
