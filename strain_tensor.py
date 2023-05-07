@@ -1,5 +1,7 @@
 """A module which contains functions that calculat the strain tensor associated with a defect site usisng a finite difference approximation"""
 
+import numpy as np
+from constants import *
 
 def minimum_image(x):
     """return the minimum image of a vector under periodic boundary conditions"""
