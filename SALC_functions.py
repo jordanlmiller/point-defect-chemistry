@@ -173,3 +173,8 @@ def valid_permutation_matrix(perm_mat):
             return False
         
     return True
+
+
+def conjugate(a: np.array, b: np.array) -> np.array:
+    """Return the conjugate of a matrix 'a' by a matrix 'b'"""
+    return a @ b @ np.linalg.inv(a)
