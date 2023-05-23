@@ -86,10 +86,10 @@ def affine(ortho: np.array, trans: np.array) -> np.array:
 
 def proj(u: np.array, v: np.array, eps=0.0001) -> np.array:
     """projection of the vector v onto the vector u"""
-
+    n = u.shape
     norm_sq = np.dot(u,u)
     if norm_sq < eps:
-        return np.zeros(3, dtype=np.float64)
+        return np.zeros(n, dtype=np.float64)
     else:
         return (np.dot(u,v)/np.dot(u,u))*u
 
@@ -98,9 +98,9 @@ def gram_schmidt(basis: list, eps=0.0001) ->list:
     """return an orthogonal basis set via the gram-schmidt process"""
 
     #normalize basis
-    for i, v in enumerate(basis):
-        basis[i] = basis[i].astype(np.float64)
-        basis[i] /= np.sqrt(np.dot(v, v))
+    for i in range(len(basis)):
+        v = basis[i].flatten().astype(np.float64)
+        basis[i] = v /  np.sqrt(np.dot(v, v))
 
     #gram-schmidt algorithm
     ortho_basis = []
@@ -117,10 +117,12 @@ def gram_schmidt(basis: list, eps=0.0001) ->list:
             zero_indices.append(i)
         else:
             ortho_basis[i] /= np.sqrt(norm_sq)
-    for i in zero_indices:
-        ortho_basis.pop(i)
+    non_zero = []
+    for i, v in enumerate(ortho_basis):
+        if i not in zero_indices:
+            non_zero.append(v)
 
-    return ortho_basis
+    return non_zero
 
 def array_equal(a1: np.array, a2: np.array, eps=0.0001) -> np.array:
     """
