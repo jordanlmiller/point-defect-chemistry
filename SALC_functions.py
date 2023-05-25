@@ -94,13 +94,26 @@ def proj(u: np.array, v: np.array, eps=0.0001) -> np.array:
         return (np.dot(u,v)/np.dot(u,u))*u
 
 
-def gram_schmidt(basis: list, eps=0.0001) ->list:
+def gram_schmidt(basis: list, eps=0.001) ->list:
     """return an orthogonal basis set via the gram-schmidt process"""
 
-    #normalize basis
+    #format arrays
     for i in range(len(basis)):
-        v = basis[i].flatten().astype(np.float64)
-        basis[i] = v /  np.sqrt(np.dot(v, v))
+        basis[i] = basis[i].flatten().astype(np.float64)
+    
+    #remove zero vectors and normalize orthogonal basis
+    zero_indices = []
+    for i, v in enumerate(basis):
+        norm_sq = np.dot(v,v)
+        if norm_sq < eps:
+            zero_indices.append(i)
+        else:
+            basis[i] /= np.sqrt(norm_sq)
+    non_zero = []
+    for i, v in enumerate(basis):
+        if i not in zero_indices:
+            non_zero.append(v)
+    basis = non_zero    
 
     #gram-schmidt algorithm
     ortho_basis = []
@@ -124,7 +137,7 @@ def gram_schmidt(basis: list, eps=0.0001) ->list:
 
     return non_zero
 
-def array_equal(a1: np.array, a2: np.array, eps=0.0001) -> np.array:
+def array_equal(a1: np.array, a2: np.array, eps=0.001) -> np.array:
     """
     Check if two arrays are equal up to a accuracy factor eps
 
