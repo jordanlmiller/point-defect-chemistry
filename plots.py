@@ -7,6 +7,10 @@ import matplotlib.pyplot as plt
 from strain_tensor import displacement_field
 from constants import *
 
+
+
+
+
 def doscar_plot(base, address_list, savename, label_list, fermi_level_list):
     """Generate density of states plots for each of the charge states given by the address_list and label_list"""
 
@@ -41,6 +45,7 @@ def doscar_plot(base, address_list, savename, label_list, fermi_level_list):
     
     
     
+
 def strain_tensor_bar(eigenvalues, charge_states, pg_list, savename):
     
     bar_spacing = 0.85
@@ -51,8 +56,7 @@ def strain_tensor_bar(eigenvalues, charge_states, pg_list, savename):
     for i in range(n):
         for j in range(3):
             xpos.append(group_spacing*i+(j*bar_spacing))
-    
-            
+      
     fig, ax = plt.subplots(figsize=(int(2*n),4), dpi=300)
     fig.tight_layout()
     max_value = np.max(eigenvalues)
@@ -73,8 +77,7 @@ def strain_tensor_bar(eigenvalues, charge_states, pg_list, savename):
         plt.text(xpos[3*i+1], text_height, pg_string, ha='center')
         
     # Save the chart so we can loop through the bars below.
-    bars = ax.bar(x=xpos, height=eigenvalues, color="#FFAA33")      
-    
+    bars = ax.bar(x=xpos, height=eigenvalues, color="#FFAA33")       
     plt.ylim(min_value-(2*text_offset), max_value+(2*text_offset))
 
     # Axis formatting.
@@ -97,6 +100,8 @@ def strain_tensor_bar(eigenvalues, charge_states, pg_list, savename):
     plt.show()  
     plt.close()
     
+
+
 
 def displacement_plot(atomic_pos, ref_pos, num_Mg, num_O, arrow_length=4):
     O_color = (.7, 0, 0, 0.8)
