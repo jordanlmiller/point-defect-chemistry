@@ -14,6 +14,7 @@ def minimum_image(x):
     return x
 
 
+
 def difference_from_point(p, vector_field):
     """return the periodic difference from a vector field to a point"""
     dx = minimum_image(p[0] - vector_field[0])
@@ -22,9 +23,11 @@ def difference_from_point(p, vector_field):
     return dx, dy, dz
 
 
+
 def difference_vector(u, v):
     """#return the periodic difference of two vectors"""
     return minimum_image(u - v)
+
 
 
 def displacement_field(atomic_pos, ref_pos):
@@ -35,10 +38,12 @@ def displacement_field(atomic_pos, ref_pos):
     return dx, dy, dz
 
 
+
 def periodic_distance(x, ref_pos):
     """calculate the periodic distance between points in space"""
     dx, dy, dz = difference_from_point(x, ref_pos)
     return np.sqrt((dx**2) + (dy**2) + (dz**2))
+
 
 
 def nearest_neighbor_indices(defect_pos, ref_pos):
@@ -50,10 +55,12 @@ def nearest_neighbor_indices(defect_pos, ref_pos):
     return sorted_indices[num_zeros:num_nearest_neighbors+num_zeros]
 
 
+
 def get_atomic_index(atom_pos, ref_pos):
     """get the index associated with a particular position in the reference"""
     distance = periodic_distance(atom_pos, ref_pos)
     return np.argwhere(distance == 0.)[0][0]       
+
 
 
 def generate_displacement_gradient(defect_pos, atomic_pos, ref_pos):
@@ -82,6 +89,7 @@ def generate_displacement_gradient(defect_pos, atomic_pos, ref_pos):
     return jacobian 
 
 
+
 def point_group(atomic_pos: np.ndarray, defect_pos: np.ndarray):
     """Return the point group of the coordination environment surronding a defect site"""
     pos = difference_from_point(defect_pos, atomic_pos)
@@ -106,6 +114,7 @@ def generate_strain_tensor(defect_pos, atomic_pos, ref_pos):
         for j in range(3):
             strain_tensor[i, j] = 0.5 * (jacobian[i,j] + jacobian[j, i])
     return strain_tensor
+
 
 
 def distance_matrix(pos: np.ndarray, defect_pos: np.ndarray) -> np.ndarray:
